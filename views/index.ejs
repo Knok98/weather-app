@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/styles/main.css">
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+            integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+            crossorigin="anonymous">
+        <title>Document</title>
+    </head>
+    <body>
+        <%if(locals.data){%>
+        <div id="widget">
+            <div id="weatherPrew" class="day">
+                <div id="wMain">
+                    
+                    <h3><%=data.city%></h3>
+                    <img src="\images\weather_icons_dovora_interactive\PNG\128\rain.png">
+                </div>
+                <div class="data">
+                    <p>Teplota: <%=Number(data.temp-272.15).toFixed(1)%>°C</p>
+                    <p>Pocitová teplota: <%=Number(data.feel-272.15).toFixed(1)%>°C</p>
+                    <p>Oblačnost: <%=data.clouds%>%</p>
+                    <p>Vlhkost: <%=data.humidity%>%</p>
+                    <p>Rychlost větru: <%=data.windspeed%> m/s</p>
+                </div>
+
+            </div>
+
+            <div id="sun">
+                <div id="sunrise">
+                    <img src="\images\sunRS\sunrise.png">
+                    <p><%=convertTimestamptoTime(data.sR)%></p>
+                </div>
+                <div id="sunset">
+                    <img src="\images\sunRS\sunset.png">
+                    <p><%=convertTimestamptoTime(data.sS)%></p>
+                </div>
+
+            </div>
+        </div>
+        <%}%>
+        <form id="myForm" method="post">
+       
+
+            <label for="city">city</label>
+            <input type="text" name="city">
+
+            <input type="submit" formaction="/teletele" name="submitButt"
+                value="city">
+        </form>
+
+    </body>
+</html>
+<%function convertTimestamptoTime(unixTimestamp) {
+ 
+ 
+    // Convert to milliseconds and
+    // then create a new Date object
+    let dateObj = new Date(unixTimestamp * 1000);
+    let utcString = dateObj.toUTCString();
+ 
+    let time = utcString.slice(-11, -4);
+ 
+    return time
+}
+%>
